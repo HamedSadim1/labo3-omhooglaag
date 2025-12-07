@@ -1,33 +1,58 @@
-import React, { Fragment, useState, FC } from "react";
-import styles from "./../App.module.css";
+import React, { useState, useEffect } from "react";
+import CounterButton from "./CounterButton";
+import CounterDisplay from "./CounterDisplay";
+import StepInput from "./StepInput";
+import { getCounterValue, setCounterValue } from "../utils/localStorage";
 
-const Counter = () => {
-  const [count, setCount] = useState<number>(0);
+interface CounterProps {
+  id: number;
+}
 
-  const handleIncrement: React.MouseEventHandler<HTMLButtonElement> = () => {
-    setCount(count + 1);
+const Counter: React.FC<CounterProps> = ({ id }) => {
+  const [count, setCount] = useState<number>(() => getCounterValue(id));
+  const [step, setStep] = useState<number>(1);
+
+  useEffect(() => {
+    setCounterValue(id, count);
+  }, [count, id]);
+
+  const handleIncrement = () => {
+    setCount(count + step);
   };
 
-  const handleDecrement: React.MouseEventHandler<HTMLButtonElement> = () => {
-    setCount(count - 1);
+  const handleDecrement = () => {
+    setCount(count - step);
   };
 
-  let changeColor =
-    count < 0 ? "red" : "green" && count === 0 ? "black" : "green";
+  const handleReset = () => {
+    setCount(0);
+  };
+
+  const handleStepChange = (value: number) => {
+    setStep(value);
+  };
 
   return (
-    <Fragment>
-      <div className={styles.center}>
-        <h1>Counter</h1>
-        <div>
-          <button onClick={handleIncrement}>+</button>
-          <h1 style={{ color: changeColor }}>{count}</h1>
+    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 shadow-2xl">
+      <h1 className="text-2xl font-bold text-white mb-4 text-center">
+        Counter {id}
+      </h1>
+      <div className="flex flex-col items-center space-y-4">
+        <div className="flex space-x-2">
+          <CounterButton onClick={handleIncrement} variant="increment">
+            +{step}
+          </CounterButton>
+          <CounterButton onClick={handleDecrement} variant="decrement">
+            -{step}
+          </CounterButton>
         </div>
-        <div>
-          <button onClick={handleDecrement}> -</button>
-        </div>
+        <CounterDisplay count={count} />
+        <CounterButton onClick={handleReset} variant="reset">
+          Reset
+        </CounterButton>
+        <StepInput step={step} onStepChange={handleStepChange} />
       </div>
-    </Fragment>
+    </div>
   );
 };
 

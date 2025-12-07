@@ -1,46 +1,152 @@
-# Getting Started with Create React App
+# Counter App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Tailwind CSS. Deze app toont vier onafhankelijke counters met glasmorfisme UI-effecten, aanpasbare stapgroottes en persistentie via localStorage.
 
-## Available Scripts
+![Counter App Preview](https://via.placeholder.com/800x400/6366f1/ffffff?text=Counter+App+Preview)
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+- **Vier onafhankelijke counters** met unieke identificatie
+- **Aanpasbare stapgroottes** voor elke counter
+- **Glasmorfisme UI** met moderne visuele effecten
+- **Persistentie** via localStorage - waarden blijven behouden bij herladen
+- **Realtime totaal** van alle counters
+- **Reset functionaliteit** voor individuele counters en alle counters tegelijk
+- **Responsive design** dat werkt op desktop, tablet en mobiel
+- **TypeScript** voor type veiligheid
+- **Moderne build tooling** met Vite voor snelle development
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🛠️ Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Frontend Framework:** React 18
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Build Tool:** Vite
+- **Icons:** Geen externe icon libraries (gebruikt tekst)
+- **State Management:** React Hooks (useState, useEffect)
+- **Data Persistence:** Browser localStorage API
 
-### `npm test`
+## 🚀 Installatie
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Vereisten
 
-### `npm run build`
+- Node.js (versie 16 of hoger)
+- npm of yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Stappen
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone de repository**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   git clone https://github.com/HamedSadim1/labo3-omhooglaag.git
+   cd labo3-omhooglaag
+   ```
 
-### `npm run eject`
+2. **Installeer dependencies**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```bash
+   npm install
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Start de development server**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   ```bash
+   npm run dev
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+4. **Open je browser**
+   Ga naar [http://localhost:5173](http://localhost:5173) om de app te bekijken.
 
-## Learn More
+## 📖 Gebruik
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Basis Functionaliteit
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Increment:** Klik op de blauwe "+" knop om de counter te verhogen
+- **Decrement:** Klik op de rode "-" knop om de counter te verlagen
+- **Reset:** Klik op de grijze "Reset" knop om een counter naar 0 te zetten
+- **Stapgrootte:** Gebruik het input veld om de stapgrootte aan te passen (standaard: 1)
+
+### Geavanceerde Features
+
+- **Persistentie:** Counter waarden worden automatisch opgeslagen in localStorage
+- **Totaal:** Het gele totaal toont de som van alle vier counters
+- **Reset All:** Gebruik de "Reset All" knop in het totaal gedeelte om alle counters te resetten
+
+## 📁 Project Structuur
+
+```bash
+src/
+├── components/
+│   ├── Counter.tsx          # Hoofd counter component
+│   ├── CounterButton.tsx    # Herbruikbare knop component
+│   ├── CounterDisplay.tsx   # Display component voor counter waarde
+│   ├── CounterGrid.tsx      # Grid layout voor alle counters
+│   ├── StepInput.tsx        # Input component voor stapgrootte
+│   └── Total.tsx            # Totaal component
+├── utils/
+│   └── localStorage.ts      # Utility functies voor data persistentie
+├── App.tsx                  # Hoofd applicatie component
+├── main.tsx                 # Applicatie entry point
+└── index.css                # Globale styles met Tailwind
+```
+
+## 🏃‍♂️ Scripts
+
+- `npm run dev` - Start de development server
+- `npm run build` - Bouw de app voor productie
+- `npm run preview` - Preview de productie build lokaal
+
+## 🎨 UI/UX Design
+
+De app gebruikt moderne glasmorfisme effecten:
+
+- **Transparante achtergronden** met blur effecten
+- **Subtiele schaduwen** voor diepte
+- **Smooth animaties** bij interacties
+- **Kleurcodering** voor verschillende states (rood voor negatief, groen voor positief, grijs voor nul)
+- **Responsive grid layout** die zich aanpast aan schermgrootte
+
+## 🔧 Development
+
+### Code Stijl
+
+- **DRY Principle:** Herhalende code vermeden door herbruikbare componenten
+- **Component Composition:** Kleine, gefocuste componenten die samenwerken
+- **TypeScript:** Sterke typing voor betere developer experience
+- **Modulaire architectuur:** Gescheiden verantwoordelijkheden (UI, logica, data)
+
+### Best Practices
+
+- Hooks gebruikt voor state management
+- Functional components met TypeScript interfaces
+- Utility functies voor herbruikbare logica
+- CSS-in-JS vermeden door Tailwind classes
+
+## 🤝 Bijdragen
+
+Bijdragen zijn welkom! Volg deze stappen:
+
+1. Fork het project
+2. Maak een feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit je changes (`git commit -m 'Add amazing feature'`)
+4. Push naar de branch (`git push origin feature/amazing-feature`)
+5. Open een Pull Request
+
+## 📄 Licentie
+
+Dit project is gelicentieerd onder de MIT License - zie het [LICENSE](LICENSE) bestand voor details.
+
+## 👨‍💻 Auteur
+
+**Hamed Sadim** - [GitHub](https://github.com/HamedSadim1)
+
+## 🙏 Erkenningen
+
+- [React](https://reactjs.org/) - De JavaScript library voor building user interfaces
+- [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types
+
+---
+
+Gebouwd als onderdeel van Webframeworks labo 3 - AP Hogeschool
