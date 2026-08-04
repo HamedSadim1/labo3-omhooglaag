@@ -18,19 +18,22 @@ Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Ta
 
 ## 🛠️ Tech Stack
 
-- **Frontend Framework:** React 18
+- **Frontend Framework:** React 19
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4
 - **Build Tool:** Vite
 - **Icons:** Geen externe icon libraries (gebruikt tekst)
 - **State Management:** React Hooks (useState, useEffect)
 - **Data Persistence:** Browser localStorage API
+- **Linting:** ESLint + typescript-eslint
+- **Formatting:** Prettier
+- **Git Hooks:** Husky + lint-staged + commitlint
 
 ## 🚀 Installatie
 
 ### Vereisten
 
-- Node.js (versie 16 of hoger)
+- Node.js (versie 20.19 of hoger, of 22.12+)
 - npm of yarn
 
 ### Stappen
@@ -93,8 +96,39 @@ src/
 ## 🏃‍♂️ Scripts
 
 - `npm run dev` - Start de development server
-- `npm run build` - Bouw de app voor productie
+- `npm run build` - Typecheck en bouw de app voor productie
 - `npm run preview` - Preview de productie build lokaal
+- `npm run lint` - Check code met ESLint
+- `npm run lint:fix` - Fix automatisch oplosbare ESLint problemen
+- `npm run format` - Formatteer de code met Prettier
+- `npm run format:check` - Check of de code geformat is
+- `npm run typecheck` - Typecheck met TypeScript
+
+## 🧰 Dev Tooling
+
+Het project bevat een volledige dev tooling setup:
+
+- **ESLint** met typescript-eslint, react-hooks en react-refresh regels
+- **Prettier** voor consistente code formatting
+- **Husky** git hooks die automatisch draaien bij commits:
+  - `pre-commit`: draait lint-staged (lint + format op staged bestanden)
+  - `commit-msg`: valideert de commit message met commitlint
+- **commitlint** die [Conventional Commits](https://www.conventionalcommits.org/) afdwingt (bv. `feat:`, `fix:`, `chore:`)
+- **GitHub Actions** CI workflow die lint, format, typecheck en build draait bij elke push/PR
+
+### Commit Conventies
+
+Commit messages moeten het Conventional Commits formaat volgen:
+
+```bash
+git commit -m 'feat: add new feature'
+git commit -m 'fix: correct counter reset behavior'
+git commit -m 'chore: update dependencies'
+```
+
+Geldige types: `feat`, `fix`, `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`.
+
+## 🎨 UI/UX Design
 
 ## 🎨 UI/UX Design
 
@@ -128,9 +162,9 @@ Bijdragen zijn welkom! Volg deze stappen:
 
 1. Fork het project
 2. Maak een feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit je changes (`git commit -m 'Add amazing feature'`)
+3. Commit je changes met een conventionele commit message (bv. `git commit -m 'feat: add amazing feature'`)
 4. Push naar de branch (`git push origin feature/amazing-feature`)
-5. Open een Pull Request
+5. Open een Pull Request (gebruik het PR template)
 
 ## 📄 Licentie
 

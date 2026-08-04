@@ -3,15 +3,10 @@ import CounterButton from "./CounterButton";
 import { getTotalValue, resetAllCounters } from "../utils/localStorage";
 
 const Total = () => {
-  const [total, setTotal] = useState<number>(0);
-
-  const updateTotal = () => {
-    setTotal(getTotalValue());
-  };
+  const [total, setTotal] = useState<number>(() => getTotalValue());
 
   useEffect(() => {
-    updateTotal();
-    const interval = setInterval(updateTotal, 100); // Update every 100ms
+    const interval = setInterval(() => setTotal(getTotalValue()), 100);
     return () => clearInterval(interval);
   }, []);
 
