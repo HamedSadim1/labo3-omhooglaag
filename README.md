@@ -1,17 +1,19 @@
 # Teller App
 
-Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Tailwind CSS. Deze app toont vier onafhankelijke counters met glasmorfisme UI-effecten, aanpasbare stapgroottes en persistentie via localStorage.
+Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Tailwind CSS. De app toont vier onafhankelijke tellers met aanpasbare stapgroottes, een realtime totaal met mijlpaal-viering en persistentie via localStorage.
 
-![Counter App Preview](https://via.placeholder.com/800x400/6366f1/ffffff?text=Counter+App+Preview)
+![Teller App Preview](https://via.placeholder.com/800x400/6366f1/ffffff?text=Teller+App+Preview)
 
 ## ✨ Features
 
-- **Vier onafhankelijke counters** met unieke identificatie
-- **Aanpasbare stapgroottes** voor elke counter
-- **Glasmorfisme UI** met moderne visuele effecten
-- **Persistentie** via localStorage - waarden blijven behouden bij herladen
-- **Realtime totaal** van alle counters
-- **Reset functionaliteit** voor individuele counters en alle counters tegelijk
+- **Vier onafhankelijke tellers** met unieke identificatie
+- **Aanpasbare stapgroottes** via presets (1, 5, 10, 25) én een slider
+- **Hold-to-repeat:** ingedrukt houden van +/− herhaalt de stap automatisch
+- **Realtime totaal** met **doelvoortgangsbalk** en mijlpaal-indicator
+- **Feest bij elke 100 punten:** confetti + melding "🎉 X bereikt — goed gedaan!"
+- **Persistentie** via localStorage — waarden blijven behouden bij herladen
+- **Reset functionaliteit** voor individuele tellers en alle tellers tegelijk
+- **Toegankelijkheid:** schermlezer-aankondigingen (`role="status"`, `aria-atomic`, `aria-pressed`) en ondersteuning voor `prefers-reduced-motion`
 - **Responsive design** dat werkt op desktop, tablet en mobiel
 - **TypeScript** voor type veiligheid
 - **Moderne build tooling** met Vite voor snelle development
@@ -21,11 +23,12 @@ Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Ta
 - **Frontend Framework:** React 19
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4
+- **Class merging:** clsx + tailwind-merge (`cn`-helper)
 - **Build Tool:** Vite
 - **Icons:** Geen externe icon libraries (gebruikt tekst)
-- **State Management:** React Hooks (useState, useEffect)
+- **State Management:** React Context + custom hooks
 - **Data Persistence:** Browser localStorage API
-- **Linting:** ESLint + typescript-eslint
+- **Linting:** ESLint + typescript-eslint (incl. `@/`-alias en `no-restricted-imports` regels)
 - **Formatting:** Prettier
 - **Git Hooks:** Husky + lint-staged + commitlint
 
@@ -64,33 +67,56 @@ Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Ta
 
 ### Basis Functionaliteit
 
-- **Increment:** Klik op de blauwe "+" knop om de counter te verhogen
-- **Decrement:** Klik op de rode "-" knop om de counter te verlagen
-- **Reset:** Klik op de grijze "Reset" knop om een counter naar 0 te zetten
-- **Stapgrootte:** Gebruik het input veld om de stapgrootte aan te passen (standaard: 1)
+- **Increment:** Klik op de blauwe "+" knop om de teller te verhogen
+- **Decrement:** Klik op de rode "−" knop om de teller te verlagen
+- **Hold-to-repeat:** Houd + of − ingedrukt om de stap snel te herhalen
+- **Reset:** Klik op de grijze "Reset" knop om een teller naar 0 te zetten
+- **Stapgrootte:** Kies een preset (1, 5, 10, 25) of gebruik de slider (1–25, standaard: 1)
 
 ### Geavanceerde Features
 
-- **Persistentie:** Counter waarden worden automatisch opgeslagen in localStorage
-- **Totaal:** Het gele totaal toont de som van alle vier counters
-- **Reset All:** Gebruik de "Reset All" knop in het totaal gedeelte om alle counters te resetten
+- **Persistentie:** Tellerwaarden en stapgroottes worden automatisch opgeslagen in localStorage
+- **Totaal:** Het donkere totaalpaneel toont de som van alle vier tellers
+- **Doelvoortgang:** De voortgangsbalk toont de vooruitgang naar de volgende mijlpaal
+- **Feest:** Bij elke 100 punten verschijnt confetti en een felicitatiemelding
+- **Reset All:** Gebruik de "Alles resetten" knop in het totaalgedeelte om alle tellers te resetten
 
 ## 📁 Project Structuur
 
 ```bash
 src/
 ├── components/
-│   ├── Counter.tsx          # Hoofd counter component
-│   ├── CounterButton.tsx    # Herbruikbare knop component
-│   ├── CounterDisplay.tsx   # Display component voor counter waarde
-│   ├── CounterGrid.tsx      # Grid layout voor alle counters
-│   ├── StepInput.tsx        # Input component voor stapgrootte
-│   └── Total.tsx            # Totaal component
+│   ├── Confetti.tsx        # Confetti-viering (respecteert prefers-reduced-motion)
+│   ├── Counter.tsx         # Hoofd teller component
+│   ├── CounterButton.tsx   # Herbruikbare knop met hold-to-repeat
+│   ├── CounterDisplay.tsx  # Display component voor tellerwaarde
+│   ├── CounterGrid.tsx     # Grid layout voor alle tellers
+│   ├── GoalMessage.tsx     # Felicitatiemelding bij een mijlpaal
+│   ├── GoalProgress.tsx    # Voortgangsbalk naar de volgende mijlpaal
+│   ├── StatValue.tsx       # Gedeeld getal-display met sr-only prefix
+│   ├── StepInput.tsx       # Stapgrootte presets + slider
+│   └── Total.tsx           # Totaal paneel met viering en reset
+├── context/
+│   ├── CounterProvider.tsx # Context-provider met state + persistentie
+│   ├── counterContext.ts   # Context-definitie en types
+│   └── useCounter.ts       # Hook om de context te consumeren
+├── hooks/
+│   ├── useGoalCelebration.ts  # Mijlpaal-vieringslogica
+│   ├── useHoldRepeat.ts       # Hold-to-repeat logica
+│   └── usePersistedValues.ts  # Changed-only persistente state
 ├── utils/
-│   └── localStorage.ts      # Utility functies voor data persistentie
-├── App.tsx                  # Hoofd applicatie component
-├── main.tsx                 # Applicatie entry point
-└── index.css                # Globale styles met Tailwind
+│   ├── cn.ts              # clsx + tailwind-merge helper
+│   ├── confetti.ts        # Confetti-configuratie en generatie
+│   ├── goal.ts            # Mijlpaal-berekeningen
+│   ├── index.ts           # Barrel export van alle utils
+│   ├── localStorage.ts    # Data persistentie (storage keys)
+│   ├── math.ts            # clamp helper
+│   ├── steps.ts           # Stap-validatie (clampStep)
+│   └── values.ts          # buildValueMap helper
+├── App.tsx                # Hoofd applicatie component
+├── constants.ts           # Single Source of Truth voor alle constanten
+├── main.tsx               # Applicatie entry point
+└── index.css              # Globale styles met Tailwind
 ```
 
 ## 🏃‍♂️ Scripts
@@ -109,6 +135,7 @@ src/
 Het project bevat een volledige dev tooling setup:
 
 - **ESLint** met typescript-eslint, react-hooks en react-refresh regels
+- **Import-conventie:** gebruik de `@/` alias (`@/components/Counter`) in plaats van relatieve `../` imports — de `no-restricted-imports` regel (met het patroon `../**`) dwingt dit af
 - **Prettier** voor consistente code formatting
 - **Husky** git hooks die automatisch draaien bij commits:
   - `pre-commit`: draait lint-staged (lint + format op staged bestanden)
@@ -130,28 +157,33 @@ Geldige types: `feat`, `fix`, `build`, `chore`, `ci`, `docs`, `style`, `refactor
 
 ## 🎨 UI/UX Design
 
-De app gebruikt moderne glasmorfisme effecten:
+De app gebruikt een moderne, strakke Tailwind-stijl:
 
-- **Transparante achtergronden** met blur effecten
-- **Subtiele schaduwen** voor diepte
-- **Smooth animaties** bij interacties
-- **Kleurcodering** voor verschillende states (rood voor negatief, groen voor positief, grijs voor nul)
-- **Responsive grid layout** die zich aanpast aan schermgrootte
+- **Witte tellerkaarten** met afgeronde hoeken en subtiele schaduwen
+- **Donker gradient totaalpaneel** met gele voortgangsbalk en mijlpaal-aanduiding
+- **Smooth micro-interacties:** hover-states, actieve-schaal (press feedback) en kleurtransities
+- **Kleurcodering** voor verschillende states (rood voor negatief, grijs voor nul)
+- **Confetti-animatie** bij het behalen van een mijlpaal (uitgeschakeld bij `prefers-reduced-motion`)
+- **Responsive grid layout** (1 kolom mobiel → 2 tablet → 4 desktop) met vloeiende getal-typografie zodat grote waarden nooit overlopen
 
 ## 🔧 Development
 
 ### Code Stijl
 
-- **DRY Principle:** Herhalende code vermeden door herbruikbare componenten
+- **DRY Principle:** Herhalende code vermeden door herbruikbare componenten en helpers
 - **Component Composition:** Kleine, gefocuste componenten die samenwerken
+- **Single Source of Truth:** Alle constante waarden leven in `src/constants.ts`
+- **Gecentraliseerde utils:** Helperfuncties in logisch opgedeelde modules onder `src/utils/`, ontsloten via de barrel
 - **TypeScript:** Sterke typing voor betere developer experience
 - **Modulaire architectuur:** Gescheiden verantwoordelijkheden (UI, logica, data)
 
 ### Best Practices
 
-- Hooks gebruikt voor state management
+- Custom hooks voor herbruikbare logica (`useHoldRepeat`, `useGoalCelebration`, `usePersistedValues`)
 - Functional components met TypeScript interfaces
 - Utility functies voor herbruikbare logica
+- `cn()` voor het samenvoegen van conditionele Tailwind classes
+- Imports via de `@/` alias (geen relatieve `../` imports)
 - CSS-in-JS vermeden door Tailwind classes
 
 ## 🤝 Bijdragen
@@ -178,6 +210,8 @@ Dit project is gelicentieerd onder de MIT License - zie het [LICENSE](LICENSE) b
 - [Vite](https://vitejs.dev/) - Next generation frontend tooling
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
 - [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types
+- [clsx](https://github.com/lukeed/clsx) - Conditionele class names
+- [tailwind-merge](https://github.com/dcastil/tailwind-merge) - Conflict-vrije Tailwind class merging
 
 ---
 
