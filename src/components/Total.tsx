@@ -1,32 +1,62 @@
-import React, { useState, useEffect } from "react";
-import CounterButton from "./CounterButton";
-import { getTotalValue, resetAllCounters } from "../utils/localStorage";
+import React from "react";
+import CounterButton from "@/components/CounterButton";
+import Confetti from "@/components/Confetti";
+import GoalMessage from "@/components/GoalMessage";
+import GoalProgress from "@/components/GoalProgress";
+import StatValue from "@/components/StatValue";
+import { useCounter } from "@/context/useCounter";
+import { useGoalCelebration } from "@/hooks/useGoalCelebration";
+import { cn, getMilestone } from "@/utils";
+import { TOTAL_NUMBER_SIZE_CLASS } from "@/constants";
 
 const Total = () => {
-  const [total, setTotal] = useState<number>(() => getTotalValue());
+  const { total, resetAll } = useCounter();
+  const { celebration, resetCelebration } = useGoalCelebration(total);
 
-  useEffect(() => {
-    const interval = setInterval(() => setTotal(getTotalValue()), 100);
-    return () => clearInterval(interval);
-  }, []);
+  const milestone = getMilestone(total);
 
   const handleResetAll = () => {
-    resetAllCounters();
-    setTotal(0);
+    resetCelebration();
+    resetAll();
   };
 
   return (
-    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 shadow-2xl col-span-full">
-      <h2 className="text-3xl font-bold text-white mb-4 text-center">Total</h2>
-      <p className="text-5xl font-bold text-center text-yellow-400 mb-4">
-        {total}
-      </p>
-      <div className="flex justify-center">
-        <CounterButton onClick={handleResetAll} variant="decrement">
-          Reset All
+    <>
+      {celebration > 0 && <Confetti key={celebration} trigger={celebration} />}
+      <section
+        aria-label="Totaal van alle tellers"
+        className={cn(
+          "col-span-full bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col items-center gap-4"
+        )}
+      >
+        <h2
+          className={cn(
+            "text-sm font-semibold text-gray-300 uppercase tracking-widest"
+          )}
+        >
+          Totaal
+        </h2>
+        <StatValue
+          value={total}
+          prefix="Totaal is "
+          role="status"
+          ariaAtomic
+          className={cn(TOTAL_NUMBER_SIZE_CLASS)}
+        />
+        <GoalProgress total={total} />
+        {celebration > 0 && milestone > 0 && (
+          <GoalMessage key={celebration} goalValue={milestone} />
+        )}
+        <CounterButton
+          onClick={handleResetAll}
+          variant="ghost"
+          label="Reset alle tellers naar 0"
+          disabled={total === 0}
+        >
+          Alles resetten
         </CounterButton>
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
 
