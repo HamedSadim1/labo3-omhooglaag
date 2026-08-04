@@ -6,7 +6,7 @@ import GoalProgress from "@/components/GoalProgress";
 import StatValue from "@/components/StatValue";
 import { useCounter } from "@/context/useCounter";
 import { useGoalCelebration } from "@/hooks/useGoalCelebration";
-import { getMilestone } from "@/utils";
+import { cn, getMilestone } from "@/utils";
 import { TOTAL_NUMBER_SIZE_CLASS } from "@/constants";
 
 const Total = () => {
@@ -25,9 +25,15 @@ const Total = () => {
       {celebration > 0 && <Confetti key={celebration} trigger={celebration} />}
       <section
         aria-label="Totaal van alle tellers"
-        className="col-span-full bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col items-center gap-4"
+        className={cn(
+          "col-span-full bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col items-center gap-4"
+        )}
       >
-        <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
+        <h2
+          className={cn(
+            "text-sm font-semibold text-gray-300 uppercase tracking-widest"
+          )}
+        >
           Totaal
         </h2>
         <StatValue
@@ -35,7 +41,7 @@ const Total = () => {
           prefix="Totaal is "
           role="status"
           ariaAtomic
-          className={TOTAL_NUMBER_SIZE_CLASS}
+          className={cn(TOTAL_NUMBER_SIZE_CLASS)}
         />
         <GoalProgress total={total} />
         {celebration > 0 && milestone > 0 && (

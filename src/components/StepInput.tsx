@@ -19,17 +19,25 @@ const StepInput: React.FC<StepInputProps> = ({
 
   return (
     <div
-      className="w-full flex flex-col items-center gap-3"
+      className={cn("w-full flex flex-col items-center gap-3")}
       aria-label={`Stapgrootte voor counter ${counterId}`}
     >
-      <div className="flex items-center justify-between w-full">
-        <span className="text-sm font-medium text-gray-500">Stap</span>
-        <span className="text-sm font-semibold text-gray-900 tabular-nums bg-gray-100 px-2.5 py-0.5 rounded-md">
+      <div className={cn("flex items-center justify-between w-full")}>
+        <span className={cn("text-sm font-medium text-gray-500")}>Stap</span>
+        <span
+          className={cn(
+            "text-sm font-semibold text-gray-900 tabular-nums bg-gray-100 px-2.5 py-0.5 rounded-md"
+          )}
+        >
           {step}
         </span>
       </div>
 
-      <div className="flex gap-2 w-full" role="group" aria-label="Stap presets">
+      <div
+        className={cn("flex gap-2 w-full")}
+        role="group"
+        aria-label="Stap presets"
+      >
         {STEP_PRESETS.map((preset) => (
           <button
             key={preset}
@@ -56,7 +64,7 @@ const StepInput: React.FC<StepInputProps> = ({
         onChange={handleSliderChange}
         aria-label={`Stapgrootte slider voor counter ${counterId}`}
         aria-valuetext={`${step}`}
-        className="w-full accent-gray-900 cursor-pointer"
+        className={cn("w-full accent-gray-900 cursor-pointer")}
       />
     </div>
   );

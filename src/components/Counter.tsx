@@ -3,6 +3,7 @@ import CounterButton from "@/components/CounterButton";
 import CounterDisplay from "@/components/CounterDisplay";
 import StepInput from "@/components/StepInput";
 import { useCounter } from "@/context/useCounter";
+import { cn } from "@/utils";
 import {
   DEFAULT_COUNTER_VALUE,
   DEFAULT_STEP_VALUE,
@@ -36,15 +37,21 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
   return (
     <section
       aria-label={`Teller ${id}`}
-      className="bg-white rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50 p-6 flex flex-col items-center gap-5 transition-shadow duration-300 hover:shadow-xl hover:shadow-gray-200/60"
+      className={cn(
+        "bg-white rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50 p-6 flex flex-col items-center gap-5 transition-shadow duration-300 hover:shadow-xl hover:shadow-gray-200/60"
+      )}
     >
-      <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-widest">
+      <h2
+        className={cn(
+          "text-sm font-semibold text-gray-500 uppercase tracking-widest"
+        )}
+      >
         Teller {id}
       </h2>
 
       <CounterDisplay count={count} id={id} />
 
-      <div className="flex gap-3">
+      <div className={cn("flex gap-3")}>
         {stepActions.map(({ variant, symbol, label, onClick }) => (
           <CounterButton
             key={variant}

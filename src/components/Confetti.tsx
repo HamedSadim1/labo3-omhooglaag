@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CELEBRATION_MS } from "@/constants";
 import {
+  cn,
   generatePieces,
   prefersReducedMotion,
   type ConfettiPiece,
@@ -26,13 +27,15 @@ const Confetti: React.FC<ConfettiProps> = ({ trigger }) => {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-50 overflow-hidden"
+      className={cn("pointer-events-none fixed inset-0 z-50 overflow-hidden")}
       aria-hidden="true"
     >
       {pieces.map((piece) => (
         <span
           key={piece.id}
-          className="absolute top-0 block rounded-sm animate-confetti-fall"
+          className={cn(
+            "absolute top-0 block rounded-sm animate-confetti-fall"
+          )}
           style={{
             left: `${piece.left}%`,
             width: piece.size,
