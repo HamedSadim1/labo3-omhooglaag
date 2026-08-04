@@ -3,25 +3,60 @@ import React from "react";
 interface StepInputProps {
   step: number;
   onStepChange: (value: number) => void;
+  counterId: number;
 }
 
-const StepInput: React.FC<StepInputProps> = ({ step, onStepChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value > 0) {
-      onStepChange(value);
-    }
+const STEP_PRESETS = [1, 5, 10, 25] as const;
+const MAX_STEP = 25;
+
+const StepInput: React.FC<StepInputProps> = ({
+  step,
+  onStepChange,
+  counterId,
+}) => {
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onStepChange(parseInt(e.target.value, 10));
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      <label className="text-white text-sm">Step:</label>
+    <div
+      className="w-full flex flex-col items-center gap-3"
+      aria-label={`Stapgrootte voor counter ${counterId}`}
+    >
+      <div className="flex items-center justify-between w-full">
+        <span className="text-sm font-medium text-gray-500">Stap</span>
+        <span className="text-sm font-semibold text-gray-900 tabular-nums bg-gray-100 px-2.5 py-0.5 rounded-md">
+          {step}
+        </span>
+      </div>
+
+      <div className="flex gap-2 w-full" role="group" aria-label="Stap presets">
+        {STEP_PRESETS.map((preset) => (
+          <button
+            key={preset}
+            type="button"
+            onClick={() => onStepChange(preset)}
+            aria-pressed={step === preset}
+            className={`flex-1 py-1.5 text-sm font-medium rounded-lg transition-all duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
+              step === preset
+                ? "bg-gray-900 text-white shadow-sm"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
+          >
+            {preset}
+          </button>
+        ))}
+      </div>
+
       <input
-        type="number"
-        value={step}
-        onChange={handleChange}
+        type="range"
         min="1"
-        className="w-16 px-2 py-1 bg-white/20 border border-white/30 rounded text-white text-center backdrop-blur-sm"
+        max={MAX_STEP}
+        value={step}
+        onChange={handleSliderChange}
+        aria-label={`Stapgrootte slider voor counter ${counterId}`}
+        aria-valuetext={`${step}`}
+        className="w-full accent-gray-900 cursor-pointer"
       />
     </div>
   );

@@ -1,58 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import CounterButton from "./CounterButton";
 import CounterDisplay from "./CounterDisplay";
 import StepInput from "./StepInput";
-import { getCounterValue, setCounterValue } from "../utils/localStorage";
+import { useCounter } from "../context/useCounter";
 
 interface CounterProps {
   id: number;
 }
 
 const Counter: React.FC<CounterProps> = ({ id }) => {
-  const [count, setCount] = useState<number>(() => getCounterValue(id));
-  const [step, setStep] = useState<number>(1);
-
-  useEffect(() => {
-    setCounterValue(id, count);
-  }, [count, id]);
-
-  const handleIncrement = () => {
-    setCount(count + step);
-  };
-
-  const handleDecrement = () => {
-    setCount(count - step);
-  };
-
-  const handleReset = () => {
-    setCount(0);
-  };
-
-  const handleStepChange = (value: number) => {
-    setStep(value);
-  };
+  const { counts, steps, increment, decrement, reset, setStep } = useCounter();
+  const count = counts[id] ?? 0;
+  const step = steps[id] ?? 1;
 
   return (
-    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-6 shadow-2xl">
-      <h1 className="text-2xl font-bold text-white mb-4 text-center">
+    <section
+      aria-label={`Counter ${id}`}
+      className="bg-white rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50 p-6 flex flex-col items-center gap-5 transition-shadow duration-300 hover:shadow-xl hover:shadow-gray-200/60"
+    >
+      <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest">
         Counter {id}
-      </h1>
-      <div className="flex flex-col items-center space-y-4">
-        <div className="flex space-x-2">
-          <CounterButton onClick={handleIncrement} variant="increment">
-            +{step}
-          </CounterButton>
-          <CounterButton onClick={handleDecrement} variant="decrement">
-            -{step}
-          </CounterButton>
-        </div>
-        <CounterDisplay count={count} />
-        <CounterButton onClick={handleReset} variant="reset">
-          Reset
+      </h2>
+
+      <CounterDisplay count={count} id={id} />
+
+      <div className="flex gap-3">
+        <CounterButton
+          onClick={() => decrement(id)}
+          variant="decrement"
+          label={`Verlaag counter ${id} met ${step}`}
+          size="sm"
+        >
+          −{step}
         </CounterButton>
-        <StepInput step={step} onStepChange={handleStepChange} />
+        <CounterButton
+          onClick={() => increment(id)}
+          variant="increment"
+          label={`Verhoog counter ${id} met ${step}`}
+          size="sm"
+        >
+          +{step}
+        </CounterButton>
       </div>
-    </div>
+
+      <CounterButton
+        onClick={() => reset(id)}
+        variant="reset"
+        label={`Reset counter ${id} naar 0`}
+        size="sm"
+      >
+        Reset
+      </CounterButton>
+
+      <StepInput
+        step={step}
+        onStepChange={(value) => setStep(id, value)}
+        counterId={id}
+      />
+    </section>
   );
 };
 

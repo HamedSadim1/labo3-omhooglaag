@@ -7,6 +7,15 @@ export const setCounterValue = (id: number, value: number): void => {
   localStorage.setItem(`counter-${id}`, value.toString());
 };
 
+export const getStepValue = (id: number): number => {
+  const saved = localStorage.getItem(`step-${id}`);
+  return saved ? parseInt(saved, 10) : 1;
+};
+
+export const setStepValue = (id: number, value: number): void => {
+  localStorage.setItem(`step-${id}`, value.toString());
+};
+
 export const getTotalValue = (): number => {
   const counters = [1, 2, 3, 4];
   return counters.reduce((acc, id) => acc + getCounterValue(id), 0);
