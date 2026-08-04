@@ -18,7 +18,7 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
       aria-label={`Counter ${id}`}
       className="bg-white rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50 p-6 flex flex-col items-center gap-5 transition-shadow duration-300 hover:shadow-xl hover:shadow-gray-200/60"
     >
-      <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest">
+      <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-widest">
         Counter {id}
       </h2>
 

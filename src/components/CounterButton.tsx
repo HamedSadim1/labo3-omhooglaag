@@ -10,10 +10,10 @@ interface CounterButtonProps {
 }
 
 const variantClasses: Record<string, string> = {
-  increment: "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700",
-  decrement: "bg-red-500 text-white hover:bg-red-600 active:bg-red-700",
+  increment: "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800",
+  decrement: "bg-red-600 text-white hover:bg-red-700 active:bg-red-800",
   reset: "bg-gray-200 text-gray-700 hover:bg-gray-300 active:bg-gray-400",
-  primary: "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700",
+  primary: "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800",
 };
 
 const sizeClasses: Record<string, string> = {

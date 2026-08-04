@@ -10,7 +10,7 @@ const CounterDisplay: React.FC<CounterDisplayProps> = ({ count, id }) => {
     count < 0
       ? "text-red-500"
       : count === 0
-        ? "text-gray-400"
+        ? "text-gray-500"
         : "text-gray-900";
 
   return (
