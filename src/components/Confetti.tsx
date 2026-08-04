@@ -1,43 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { CELEBRATION_MS } from "../constants";
-
-const CONFETTI_COLORS = [
-  "#ef4444",
-  "#3b82f6",
-  "#22c55e",
-  "#eab308",
-  "#a855f7",
-  "#f97316",
-];
-
-interface ConfettiPiece {
-  id: number;
-  left: number;
-  color: string;
-  size: number;
-  delay: number;
-  duration: number;
-  rotation: number;
-}
+import {
+  generatePieces,
+  prefersReducedMotion,
+  type ConfettiPiece,
+} from "../utils";
 
 interface ConfettiProps {
   trigger: number;
 }
-
-const generatePieces = (trigger: number): ConfettiPiece[] =>
-  Array.from({ length: 40 }, (_, i) => ({
-    id: i + trigger * 100,
-    left: Math.random() * 100,
-    color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-    size: 6 + Math.random() * 6,
-    delay: Math.random() * 0.3,
-    duration: 1.5 + Math.random() * 1.5,
-    rotation: Math.random() * 360,
-  }));
-
-const prefersReducedMotion = (): boolean =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const Confetti: React.FC<ConfettiProps> = ({ trigger }) => {
   const [reducedMotion] = useState<boolean>(prefersReducedMotion);

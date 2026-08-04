@@ -1,4 +1,12 @@
-import { MAX_STEP } from "../constants";
+import {
+  COUNTER_STORAGE_KEY_PREFIX,
+  DEFAULT_COUNTER_VALUE,
+  DEFAULT_STEP_VALUE,
+  MAX_STEP,
+  STEP_MIN,
+  STEP_STORAGE_KEY_PREFIX,
+} from "../constants";
+import { clamp } from "./math";
 
 const readStoredNumber = (
   key: string,
@@ -10,7 +18,7 @@ const readStoredNumber = (
   if (raw === null) return fallback;
   const parsed = Number.parseInt(raw, 10);
   if (Number.isNaN(parsed)) return fallback;
-  if (min !== undefined) return Math.min(max ?? parsed, Math.max(min, parsed));
+  if (min !== undefined) return clamp(parsed, min, max ?? parsed);
   return parsed;
 };
 
@@ -23,13 +31,18 @@ const setStoredNumber = (key: string, value: number): void => {
 };
 
 export const getCounterValue = (id: number): number =>
-  readStoredNumber(`counter-${id}`, 0);
+  readStoredNumber(`${COUNTER_STORAGE_KEY_PREFIX}${id}`, DEFAULT_COUNTER_VALUE);
 
 export const setCounterValue = (id: number, value: number): void =>
-  setStoredNumber(`counter-${id}`, value);
+  setStoredNumber(`${COUNTER_STORAGE_KEY_PREFIX}${id}`, value);
 
 export const getStepValue = (id: number): number =>
-  readStoredNumber(`step-${id}`, 1, 1, MAX_STEP);
+  readStoredNumber(
+    `${STEP_STORAGE_KEY_PREFIX}${id}`,
+    DEFAULT_STEP_VALUE,
+    STEP_MIN,
+    MAX_STEP
+  );
 
 export const setStepValue = (id: number, value: number): void =>
-  setStoredNumber(`step-${id}`, value);
+  setStoredNumber(`${STEP_STORAGE_KEY_PREFIX}${id}`, value);

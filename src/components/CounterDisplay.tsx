@@ -1,5 +1,6 @@
 import React from "react";
 import StatValue from "./StatValue";
+import { COUNTER_NUMBER_SIZE_CLASS } from "../constants";
 
 interface CounterDisplayProps {
   count: number;
@@ -18,7 +19,7 @@ const CounterDisplay: React.FC<CounterDisplayProps> = ({ count, id }) => {
     <StatValue
       value={count}
       prefix={`Teller ${id} waarde is `}
-      className={`text-[length:clamp(2rem,6vw,3.75rem)] ${changeColor} transition-colors duration-300`}
+      className={`${COUNTER_NUMBER_SIZE_CLASS} ${changeColor} transition-colors duration-300`}
     />
   );
 };

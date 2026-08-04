@@ -3,15 +3,17 @@ import CounterButton from "./CounterButton";
 import CounterDisplay from "./CounterDisplay";
 import StepInput from "./StepInput";
 import { useCounter } from "../context/useCounter";
+import { DEFAULT_COUNTER_VALUE, DEFAULT_STEP_VALUE } from "../constants";
+import type { CounterId } from "../constants";
 
 interface CounterProps {
-  id: number;
+  id: CounterId;
 }
 
 const Counter: React.FC<CounterProps> = ({ id }) => {
   const { counts, steps, increment, decrement, reset, setStep } = useCounter();
-  const count = counts[id] ?? 0;
-  const step = steps[id] ?? 1;
+  const count = counts[id] ?? DEFAULT_COUNTER_VALUE;
+  const step = steps[id] ?? DEFAULT_STEP_VALUE;
 
   const stepActions = [
     {

@@ -1,29 +1,29 @@
 import React, { useCallback, useMemo, useState } from "react";
 import {
+  COUNTER_IDS,
+  DEFAULT_COUNTER_VALUE,
+  DEFAULT_STEP_VALUE,
+} from "../constants";
+import { CounterContext, CounterContextValue } from "./counterContext";
+import { usePersistedValues } from "../hooks/usePersistedValues";
+import {
+  buildValueMap,
+  clampStep,
   getCounterValue,
   getStepValue,
   setCounterValue,
   setStepValue,
-} from "../utils/localStorage";
-import { COUNTER_IDS, MAX_STEP } from "../constants";
-import { CounterContext, CounterContextValue } from "./counterContext";
-import { loadValues, usePersistedValues } from "./usePersistedValues";
-
-const clampStep = (value: number): number => {
-  const rounded = Math.round(value);
-  if (!Number.isFinite(rounded)) return 1;
-  return Math.min(MAX_STEP, Math.max(1, rounded));
-};
+} from "../utils";
 
 export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [counts, setCounts] = useState<Record<number, number>>(() =>
-    loadValues(COUNTER_IDS, getCounterValue)
+    buildValueMap(COUNTER_IDS, getCounterValue)
   );
 
   const [steps, setSteps] = useState<Record<number, number>>(() =>
-    loadValues(COUNTER_IDS, getStepValue)
+    buildValueMap(COUNTER_IDS, getStepValue)
   );
 
   usePersistedValues(COUNTER_IDS, counts, setCounterValue);
@@ -33,7 +33,7 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
     (id: number) => {
       setCounts((prev) => ({
         ...prev,
-        [id]: prev[id] + (steps[id] || 1),
+        [id]: prev[id] + (steps[id] || DEFAULT_STEP_VALUE),
       }));
     },
     [steps]
@@ -43,7 +43,7 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
     (id: number) => {
       setCounts((prev) => ({
         ...prev,
-        [id]: prev[id] - (steps[id] || 1),
+        [id]: prev[id] - (steps[id] || DEFAULT_STEP_VALUE),
       }));
     },
     [steps]
@@ -58,7 +58,7 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const resetAll = useCallback(() => {
-    setCounts(loadValues(COUNTER_IDS, () => 0));
+    setCounts(buildValueMap(COUNTER_IDS, () => DEFAULT_COUNTER_VALUE));
   }, []);
 
   const total = useMemo(

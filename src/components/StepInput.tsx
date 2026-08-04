@@ -1,13 +1,11 @@
 import React from "react";
-import { MAX_STEP } from "../constants";
+import { MAX_STEP, STEP_MIN, STEP_PRESETS } from "../constants";
 
 interface StepInputProps {
   step: number;
   onStepChange: (value: number) => void;
   counterId: number;
 }
-
-const STEP_PRESETS = [1, 5, 10, 25] as const;
 
 const StepInput: React.FC<StepInputProps> = ({
   step,
@@ -50,7 +48,7 @@ const StepInput: React.FC<StepInputProps> = ({
 
       <input
         type="range"
-        min="1"
+        min={STEP_MIN}
         max={MAX_STEP}
         value={step}
         onChange={handleSliderChange}
