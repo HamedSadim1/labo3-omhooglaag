@@ -16,6 +16,20 @@ export default tseslint.config(
       reactRefresh.configs.vite,
       prettier,
     ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["../**"],
+              message:
+                "Gebruik de '@/' alias in plaats van relatieve parent-imports (../).",
+            },
+          ],
+        },
+      ],
+    },
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.browser,
