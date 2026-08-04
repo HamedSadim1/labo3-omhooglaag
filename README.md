@@ -1,4 +1,4 @@
-# Counter App
+# Teller App
 
 Een moderne, interactieve counter applicatie gebouwd met React, TypeScript en Tailwind CSS. Deze app toont vier onafhankelijke counters met glasmorfisme UI-effecten, aanpasbare stapgroottes en persistentie via localStorage.
 
@@ -127,8 +127,6 @@ git commit -m 'chore: update dependencies'
 ```
 
 Geldige types: `feat`, `fix`, `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`.
-
-## 🎨 UI/UX Design
 
 ## 🎨 UI/UX Design
 

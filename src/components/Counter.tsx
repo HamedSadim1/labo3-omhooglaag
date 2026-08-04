@@ -15,11 +15,11 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
 
   return (
     <section
-      aria-label={`Counter ${id}`}
+      aria-label={`Teller ${id}`}
       className="bg-white rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50 p-6 flex flex-col items-center gap-5 transition-shadow duration-300 hover:shadow-xl hover:shadow-gray-200/60"
     >
       <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-widest">
-        Counter {id}
+        Teller {id}
       </h2>
 
       <CounterDisplay count={count} id={id} />
@@ -28,16 +28,18 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
         <CounterButton
           onClick={() => decrement(id)}
           variant="decrement"
-          label={`Verlaag counter ${id} met ${step}`}
+          label={`Verlaag teller ${id} met ${step}`}
           size="sm"
+          repeat
         >
           −{step}
         </CounterButton>
         <CounterButton
           onClick={() => increment(id)}
           variant="increment"
-          label={`Verhoog counter ${id} met ${step}`}
+          label={`Verhoog teller ${id} met ${step}`}
           size="sm"
+          repeat
         >
           +{step}
         </CounterButton>
@@ -46,8 +48,9 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
       <CounterButton
         onClick={() => reset(id)}
         variant="reset"
-        label={`Reset counter ${id} naar 0`}
+        label={`Reset teller ${id} naar 0`}
         size="sm"
+        disabled={count === 0}
       >
         Reset
       </CounterButton>

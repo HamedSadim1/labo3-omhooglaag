@@ -15,10 +15,9 @@ const CounterDisplay: React.FC<CounterDisplayProps> = ({ count, id }) => {
 
   return (
     <p
-      role="status"
-      className={`text-6xl font-light tabular-nums ${changeColor} transition-colors duration-300`}
+      className={`text-[length:clamp(2rem,6vw,3.75rem)] font-light tabular-nums min-w-0 overflow-hidden ${changeColor} transition-colors duration-300`}
     >
-      <span className="sr-only">Counter {id} waarde is </span>
+      <span className="sr-only">Teller {id} waarde is </span>
       {count}
     </p>
   );

@@ -1,12 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   getCounterValue,
   getStepValue,
   setCounterValue,
   setStepValue,
 } from "../utils/localStorage";
-import { COUNTER_IDS } from "../constants";
+import { COUNTER_IDS, MAX_STEP } from "../constants";
 import { CounterContext, CounterContextValue } from "./counterContext";
+
+const clampStep = (value: number): number => {
+  const rounded = Math.round(value);
+  if (!Number.isFinite(rounded)) return 1;
+  return Math.min(MAX_STEP, Math.max(1, rounded));
+};
 
 export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -27,12 +39,25 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
     return initial;
   });
 
+  // Persist only counters that actually changed; never let storage failures crash the app.
+  const prevCountsRef = useRef(counts);
   useEffect(() => {
-    COUNTER_IDS.forEach((id) => setCounterValue(id, counts[id]));
+    COUNTER_IDS.forEach((id) => {
+      if (counts[id] !== prevCountsRef.current[id]) {
+        setCounterValue(id, counts[id]);
+      }
+    });
+    prevCountsRef.current = counts;
   }, [counts]);
 
+  const prevStepsRef = useRef(steps);
   useEffect(() => {
-    COUNTER_IDS.forEach((id) => setStepValue(id, steps[id]));
+    COUNTER_IDS.forEach((id) => {
+      if (steps[id] !== prevStepsRef.current[id]) {
+        setStepValue(id, steps[id]);
+      }
+    });
+    prevStepsRef.current = steps;
   }, [steps]);
 
   const increment = useCallback(
@@ -60,7 +85,7 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const setStep = useCallback((id: number, value: number) => {
-    setSteps((prev) => ({ ...prev, [id]: value }));
+    setSteps((prev) => ({ ...prev, [id]: clampStep(value) }));
   }, []);
 
   const resetAll = useCallback(() => {

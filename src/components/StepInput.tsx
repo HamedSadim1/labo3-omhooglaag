@@ -1,4 +1,5 @@
 import React from "react";
+import { MAX_STEP } from "../constants";
 
 interface StepInputProps {
   step: number;
@@ -7,7 +8,6 @@ interface StepInputProps {
 }
 
 const STEP_PRESETS = [1, 5, 10, 25] as const;
-const MAX_STEP = 25;
 
 const StepInput: React.FC<StepInputProps> = ({
   step,

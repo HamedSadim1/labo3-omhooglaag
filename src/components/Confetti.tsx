@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { CELEBRATION_MS } from "../constants";
 
 const CONFETTI_COLORS = [
   "#ef4444",
@@ -34,16 +35,21 @@ const generatePieces = (trigger: number): ConfettiPiece[] =>
     rotation: Math.random() * 360,
   }));
 
+const prefersReducedMotion = (): boolean =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 const Confetti: React.FC<ConfettiProps> = ({ trigger }) => {
+  const [reducedMotion] = useState<boolean>(prefersReducedMotion);
   const [pieces, setPieces] = useState<ConfettiPiece[]>(() =>
-    trigger === 0 ? [] : generatePieces(trigger)
+    trigger === 0 || reducedMotion ? [] : generatePieces(trigger)
   );
 
   useEffect(() => {
-    if (trigger === 0) return;
-    const timeout = setTimeout(() => setPieces([]), 3500);
+    if (trigger === 0 || reducedMotion) return;
+    const timeout = setTimeout(() => setPieces([]), CELEBRATION_MS);
     return () => clearTimeout(timeout);
-  }, [trigger]);
+  }, [trigger, reducedMotion]);
 
   if (pieces.length === 0) return null;
 

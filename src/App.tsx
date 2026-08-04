@@ -9,10 +9,10 @@ function App() {
             Interactieve tellers
           </p>
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-3">
-            Counter App
+            Teller App
           </h1>
           <p className="text-gray-500 text-lg leading-relaxed">
-            Vier onafhankelijke counters met aanpasbare stapgrootte. Waarden
+            Vier onafhankelijke tellers met aanpasbare stapgrootte. Waarden
             worden automatisch opgeslagen in je browser.
           </p>
         </header>
