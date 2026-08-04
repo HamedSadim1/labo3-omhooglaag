@@ -13,6 +13,21 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
   const count = counts[id] ?? 0;
   const step = steps[id] ?? 1;
 
+  const stepActions = [
+    {
+      variant: "decrement" as const,
+      symbol: "−",
+      label: `Verlaag teller ${id} met ${step}`,
+      onClick: () => decrement(id),
+    },
+    {
+      variant: "increment" as const,
+      symbol: "+",
+      label: `Verhoog teller ${id} met ${step}`,
+      onClick: () => increment(id),
+    },
+  ];
+
   return (
     <section
       aria-label={`Teller ${id}`}
@@ -25,24 +40,19 @@ const Counter: React.FC<CounterProps> = ({ id }) => {
       <CounterDisplay count={count} id={id} />
 
       <div className="flex gap-3">
-        <CounterButton
-          onClick={() => decrement(id)}
-          variant="decrement"
-          label={`Verlaag teller ${id} met ${step}`}
-          size="sm"
-          repeat
-        >
-          −{step}
-        </CounterButton>
-        <CounterButton
-          onClick={() => increment(id)}
-          variant="increment"
-          label={`Verhoog teller ${id} met ${step}`}
-          size="sm"
-          repeat
-        >
-          +{step}
-        </CounterButton>
+        {stepActions.map(({ variant, symbol, label, onClick }) => (
+          <CounterButton
+            key={variant}
+            onClick={onClick}
+            variant={variant}
+            label={label}
+            size="sm"
+            repeat
+          >
+            {symbol}
+            {step}
+          </CounterButton>
+        ))}
       </div>
 
       <CounterButton

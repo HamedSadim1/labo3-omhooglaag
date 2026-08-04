@@ -1,4 +1,5 @@
 import React from "react";
+import StatValue from "./StatValue";
 
 interface CounterDisplayProps {
   count: number;
@@ -14,12 +15,11 @@ const CounterDisplay: React.FC<CounterDisplayProps> = ({ count, id }) => {
         : "text-gray-900";
 
   return (
-    <p
-      className={`text-[length:clamp(2rem,6vw,3.75rem)] font-light tabular-nums min-w-0 overflow-hidden ${changeColor} transition-colors duration-300`}
-    >
-      <span className="sr-only">Teller {id} waarde is </span>
-      {count}
-    </p>
+    <StatValue
+      value={count}
+      prefix={`Teller ${id} waarde is `}
+      className={`text-[length:clamp(2rem,6vw,3.75rem)] ${changeColor} transition-colors duration-300`}
+    />
   );
 };
 

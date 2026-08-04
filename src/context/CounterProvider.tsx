@@ -20,45 +20,47 @@ const clampStep = (value: number): number => {
   return Math.min(MAX_STEP, Math.max(1, rounded));
 };
 
+const loadValues = (
+  getValue: (id: number) => number
+): Record<number, number> => {
+  const initial: Record<number, number> = {};
+  COUNTER_IDS.forEach((id) => {
+    initial[id] = getValue(id);
+  });
+  return initial;
+};
+
+/**
+ * Persists only values that actually changed and never lets storage failures crash the app.
+ */
+const usePersistedValues = (
+  values: Record<number, number>,
+  saveValue: (id: number, value: number) => void
+): void => {
+  const prevValuesRef = useRef(values);
+  useEffect(() => {
+    COUNTER_IDS.forEach((id) => {
+      if (values[id] !== prevValuesRef.current[id]) {
+        saveValue(id, values[id]);
+      }
+    });
+    prevValuesRef.current = values;
+  }, [values, saveValue]);
+};
+
 export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [counts, setCounts] = useState<Record<number, number>>(() => {
-    const initial: Record<number, number> = {};
-    COUNTER_IDS.forEach((id) => {
-      initial[id] = getCounterValue(id);
-    });
-    return initial;
-  });
+  const [counts, setCounts] = useState<Record<number, number>>(() =>
+    loadValues(getCounterValue)
+  );
 
-  const [steps, setSteps] = useState<Record<number, number>>(() => {
-    const initial: Record<number, number> = {};
-    COUNTER_IDS.forEach((id) => {
-      initial[id] = getStepValue(id);
-    });
-    return initial;
-  });
+  const [steps, setSteps] = useState<Record<number, number>>(() =>
+    loadValues(getStepValue)
+  );
 
-  // Persist only counters that actually changed; never let storage failures crash the app.
-  const prevCountsRef = useRef(counts);
-  useEffect(() => {
-    COUNTER_IDS.forEach((id) => {
-      if (counts[id] !== prevCountsRef.current[id]) {
-        setCounterValue(id, counts[id]);
-      }
-    });
-    prevCountsRef.current = counts;
-  }, [counts]);
-
-  const prevStepsRef = useRef(steps);
-  useEffect(() => {
-    COUNTER_IDS.forEach((id) => {
-      if (steps[id] !== prevStepsRef.current[id]) {
-        setStepValue(id, steps[id]);
-      }
-    });
-    prevStepsRef.current = steps;
-  }, [steps]);
+  usePersistedValues(counts, setCounterValue);
+  usePersistedValues(steps, setStepValue);
 
   const increment = useCallback(
     (id: number) => {
@@ -89,13 +91,7 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const resetAll = useCallback(() => {
-    setCounts(() => {
-      const next: Record<number, number> = {};
-      COUNTER_IDS.forEach((id) => {
-        next[id] = 0;
-      });
-      return next;
-    });
+    setCounts(loadValues(() => 0));
   }, []);
 
   const total = useMemo(

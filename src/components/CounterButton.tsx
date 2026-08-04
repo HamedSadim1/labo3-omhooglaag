@@ -18,15 +18,16 @@ interface CounterButtonProps {
 const REPEAT_DELAY_MS = 500;
 const REPEAT_INTERVAL_MS = 120;
 
+const BLUE_VARIANT =
+  "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus-visible:ring-blue-400";
+
 const variantClasses: Record<Variant, string> = {
-  increment:
-    "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus-visible:ring-blue-400",
+  increment: BLUE_VARIANT,
   decrement:
     "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-400",
   reset:
     "bg-gray-200 text-gray-700 hover:bg-gray-300 active:bg-gray-400 focus-visible:ring-gray-400",
-  primary:
-    "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus-visible:ring-blue-400",
+  primary: BLUE_VARIANT,
   ghost:
     "bg-white/10 text-white hover:bg-white/20 active:bg-white/30 focus-visible:ring-white/40 focus-visible:ring-offset-gray-900",
 };

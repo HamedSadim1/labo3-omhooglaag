@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CounterButton from "./CounterButton";
 import Confetti from "./Confetti";
 import GoalMessage from "./GoalMessage";
+import StatValue from "./StatValue";
 import { useCounter } from "../context/useCounter";
 import { GOAL } from "../constants";
 
@@ -42,14 +43,13 @@ const Total = () => {
         <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
           Totaal
         </h2>
-        <p
-          className="text-[length:clamp(2.5rem,10vw,4.5rem)] font-light tabular-nums min-w-0 overflow-hidden"
+        <StatValue
+          value={total}
+          prefix="Totaal is "
           role="status"
-          aria-atomic="true"
-        >
-          <span className="sr-only">Totaal is </span>
-          {total}
-        </p>
+          ariaAtomic
+          className="text-[length:clamp(2.5rem,10vw,4.5rem)]"
+        />
         <div className="w-full max-w-xs">
           <div className="flex items-center justify-between text-xs text-gray-300 mb-1.5">
             <span>Volgende mijlpaal: {nextMilestone}</span>

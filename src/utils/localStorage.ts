@@ -14,24 +14,22 @@ const readStoredNumber = (
   return parsed;
 };
 
-export const getCounterValue = (id: number): number =>
-  readStoredNumber(`counter-${id}`, 0);
-
-export const setCounterValue = (id: number, value: number): void => {
+const setStoredNumber = (key: string, value: number): void => {
   try {
-    localStorage.setItem(`counter-${id}`, value.toString());
+    localStorage.setItem(key, value.toString());
   } catch {
     // Storage unavailable (private mode / quota exceeded) — persistence is best-effort.
   }
 };
 
+export const getCounterValue = (id: number): number =>
+  readStoredNumber(`counter-${id}`, 0);
+
+export const setCounterValue = (id: number, value: number): void =>
+  setStoredNumber(`counter-${id}`, value);
+
 export const getStepValue = (id: number): number =>
   readStoredNumber(`step-${id}`, 1, 1, MAX_STEP);
 
-export const setStepValue = (id: number, value: number): void => {
-  try {
-    localStorage.setItem(`step-${id}`, value.toString());
-  } catch {
-    // Storage unavailable — persistence is best-effort.
-  }
-};
+export const setStepValue = (id: number, value: number): void =>
+  setStoredNumber(`step-${id}`, value);
