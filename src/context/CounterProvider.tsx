@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   getCounterValue,
   getStepValue,
@@ -13,6 +7,7 @@ import {
 } from "../utils/localStorage";
 import { COUNTER_IDS, MAX_STEP } from "../constants";
 import { CounterContext, CounterContextValue } from "./counterContext";
+import { loadValues, usePersistedValues } from "./usePersistedValues";
 
 const clampStep = (value: number): number => {
   const rounded = Math.round(value);
@@ -20,47 +15,19 @@ const clampStep = (value: number): number => {
   return Math.min(MAX_STEP, Math.max(1, rounded));
 };
 
-const loadValues = (
-  getValue: (id: number) => number
-): Record<number, number> => {
-  const initial: Record<number, number> = {};
-  COUNTER_IDS.forEach((id) => {
-    initial[id] = getValue(id);
-  });
-  return initial;
-};
-
-/**
- * Persists only values that actually changed and never lets storage failures crash the app.
- */
-const usePersistedValues = (
-  values: Record<number, number>,
-  saveValue: (id: number, value: number) => void
-): void => {
-  const prevValuesRef = useRef(values);
-  useEffect(() => {
-    COUNTER_IDS.forEach((id) => {
-      if (values[id] !== prevValuesRef.current[id]) {
-        saveValue(id, values[id]);
-      }
-    });
-    prevValuesRef.current = values;
-  }, [values, saveValue]);
-};
-
 export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [counts, setCounts] = useState<Record<number, number>>(() =>
-    loadValues(getCounterValue)
+    loadValues(COUNTER_IDS, getCounterValue)
   );
 
   const [steps, setSteps] = useState<Record<number, number>>(() =>
-    loadValues(getStepValue)
+    loadValues(COUNTER_IDS, getStepValue)
   );
 
-  usePersistedValues(counts, setCounterValue);
-  usePersistedValues(steps, setStepValue);
+  usePersistedValues(COUNTER_IDS, counts, setCounterValue);
+  usePersistedValues(COUNTER_IDS, steps, setStepValue);
 
   const increment = useCallback(
     (id: number) => {
@@ -91,7 +58,7 @@ export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const resetAll = useCallback(() => {
-    setCounts(loadValues(() => 0));
+    setCounts(loadValues(COUNTER_IDS, () => 0));
   }, []);
 
   const total = useMemo(
