@@ -1,7 +1,7 @@
 import React from "react";
-import Counter from "./Counter";
-import Total from "./Total";
-import { COUNTER_IDS } from "../constants";
+import Counter from "@/components/Counter";
+import Total from "@/components/Total";
+import { COUNTER_IDS } from "@/constants";
 
 const CounterGrid = () => {
   return (

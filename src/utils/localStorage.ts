@@ -5,8 +5,8 @@ import {
   MAX_STEP,
   STEP_MIN,
   STEP_STORAGE_KEY_PREFIX,
-} from "../constants";
-import { clamp } from "./math";
+} from "@/constants";
+import { clamp } from "@/utils/math";
 
 const readStoredNumber = (
   key: string,

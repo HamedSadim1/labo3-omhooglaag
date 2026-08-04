@@ -1,5 +1,6 @@
 import React from "react";
-import { MAX_STEP, STEP_MIN, STEP_PRESETS } from "../constants";
+import { MAX_STEP, STEP_MIN, STEP_PRESETS } from "@/constants";
+import { cn } from "@/utils";
 
 interface StepInputProps {
   step: number;
@@ -35,11 +36,12 @@ const StepInput: React.FC<StepInputProps> = ({
             type="button"
             onClick={() => onStepChange(preset)}
             aria-pressed={step === preset}
-            className={`flex-1 py-1.5 text-sm font-medium rounded-lg transition-all duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
+            className={cn(
+              "flex-1 py-1.5 text-sm font-medium rounded-lg transition-all duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400",
               step === preset
                 ? "bg-gray-900 text-white shadow-sm"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
+            )}
           >
             {preset}
           </button>

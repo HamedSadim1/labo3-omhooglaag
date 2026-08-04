@@ -1,4 +1,4 @@
-import CounterGrid from "./components/CounterGrid";
+import CounterGrid from "@/components/CounterGrid";
 
 function App() {
   return (

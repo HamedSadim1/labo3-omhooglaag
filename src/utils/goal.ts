@@ -1,4 +1,4 @@
-import { GOAL } from "../constants";
+import { GOAL } from "@/constants";
 
 /** The highest reached milestone (a multiple of GOAL) at or below `total`. */
 export const getMilestone = (total: number): number =>

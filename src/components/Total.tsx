@@ -1,13 +1,13 @@
 import React from "react";
-import CounterButton from "./CounterButton";
-import Confetti from "./Confetti";
-import GoalMessage from "./GoalMessage";
-import GoalProgress from "./GoalProgress";
-import StatValue from "./StatValue";
-import { useCounter } from "../context/useCounter";
-import { useGoalCelebration } from "../hooks/useGoalCelebration";
-import { getMilestone } from "../utils";
-import { TOTAL_NUMBER_SIZE_CLASS } from "../constants";
+import CounterButton from "@/components/CounterButton";
+import Confetti from "@/components/Confetti";
+import GoalMessage from "@/components/GoalMessage";
+import GoalProgress from "@/components/GoalProgress";
+import StatValue from "@/components/StatValue";
+import { useCounter } from "@/context/useCounter";
+import { useGoalCelebration } from "@/hooks/useGoalCelebration";
+import { getMilestone } from "@/utils";
+import { TOTAL_NUMBER_SIZE_CLASS } from "@/constants";
 
 const Total = () => {
   const { total, resetAll } = useCounter();

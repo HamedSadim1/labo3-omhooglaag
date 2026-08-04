@@ -1,6 +1,6 @@
 import React from "react";
-import { GOAL } from "../constants";
-import { clamp, getNextMilestone, getProgress } from "../utils";
+import { GOAL } from "@/constants";
+import { clamp, getNextMilestone, getProgress } from "@/utils";
 
 interface GoalProgressProps {
   total: number;

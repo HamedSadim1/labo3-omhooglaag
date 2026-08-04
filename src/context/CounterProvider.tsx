@@ -3,9 +3,9 @@ import {
   COUNTER_IDS,
   DEFAULT_COUNTER_VALUE,
   DEFAULT_STEP_VALUE,
-} from "../constants";
-import { CounterContext, CounterContextValue } from "./counterContext";
-import { usePersistedValues } from "../hooks/usePersistedValues";
+} from "@/constants";
+import { CounterContext, CounterContextValue } from "@/context/counterContext";
+import { usePersistedValues } from "@/hooks/usePersistedValues";
 import {
   buildValueMap,
   clampStep,
@@ -13,7 +13,7 @@ import {
   getStepValue,
   setCounterValue,
   setStepValue,
-} from "../utils";
+} from "@/utils";
 
 export const CounterProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

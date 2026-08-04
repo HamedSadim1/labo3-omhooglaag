@@ -1,4 +1,4 @@
-import { CONFETTI_CONFIG } from "../constants";
+import { CONFETTI_CONFIG } from "@/constants";
 
 export interface ConfettiPiece {
   id: number;

@@ -1,6 +1,7 @@
 import React from "react";
-import StatValue from "./StatValue";
-import { COUNTER_NUMBER_SIZE_CLASS } from "../constants";
+import StatValue from "@/components/StatValue";
+import { COUNTER_NUMBER_SIZE_CLASS } from "@/constants";
+import { cn } from "@/utils";
 
 interface CounterDisplayProps {
   count: number;
@@ -19,7 +20,11 @@ const CounterDisplay: React.FC<CounterDisplayProps> = ({ count, id }) => {
     <StatValue
       value={count}
       prefix={`Teller ${id} waarde is `}
-      className={`${COUNTER_NUMBER_SIZE_CLASS} ${changeColor} transition-colors duration-300`}
+      className={cn(
+        COUNTER_NUMBER_SIZE_CLASS,
+        changeColor,
+        "transition-colors duration-300"
+      )}
     />
   );
 };

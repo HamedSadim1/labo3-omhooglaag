@@ -1,5 +1,6 @@
 import React from "react";
-import { useHoldRepeat } from "../hooks/useHoldRepeat";
+import { useHoldRepeat } from "@/hooks/useHoldRepeat";
+import { cn } from "@/utils";
 
 type Variant = "increment" | "decrement" | "reset" | "primary" | "ghost";
 type Size = "sm" | "md" | "lg";
@@ -58,7 +59,12 @@ const CounterButton: React.FC<CounterButtonProps> = ({
       onPointerCancel={hold.onPointerCancel}
       disabled={disabled}
       aria-label={label}
-      className={`font-semibold shadow-sm transition-all duration-150 ease-out cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      className={cn(
+        "font-semibold shadow-sm transition-all duration-150 ease-out cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed",
+        variantClasses[variant],
+        sizeClasses[size],
+        className
+      )}
     >
       {children}
     </button>

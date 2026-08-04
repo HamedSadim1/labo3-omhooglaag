@@ -1,10 +1,13 @@
 import React from "react";
-import CounterButton from "./CounterButton";
-import CounterDisplay from "./CounterDisplay";
-import StepInput from "./StepInput";
-import { useCounter } from "../context/useCounter";
-import { DEFAULT_COUNTER_VALUE, DEFAULT_STEP_VALUE } from "../constants";
-import type { CounterId } from "../constants";
+import CounterButton from "@/components/CounterButton";
+import CounterDisplay from "@/components/CounterDisplay";
+import StepInput from "@/components/StepInput";
+import { useCounter } from "@/context/useCounter";
+import {
+  DEFAULT_COUNTER_VALUE,
+  DEFAULT_STEP_VALUE,
+  type CounterId,
+} from "@/constants";
 
 interface CounterProps {
   id: CounterId;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CELEBRATION_MS } from "../constants";
+import { CELEBRATION_MS } from "@/constants";
 
 interface GoalMessageProps {
   goalValue: number;

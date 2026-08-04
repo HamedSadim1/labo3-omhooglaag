@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { GOAL } from "../constants";
-import { getMilestone } from "../utils";
+import { GOAL } from "@/constants";
+import { getMilestone } from "@/utils";
 
 export interface GoalCelebration {
   /** Increments each time a new milestone is crossed; 0 until the first milestone. */

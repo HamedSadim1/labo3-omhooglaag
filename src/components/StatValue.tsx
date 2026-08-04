@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/utils";
 
 interface StatValueProps {
   value: number;
@@ -19,7 +20,7 @@ const StatValue: React.FC<StatValueProps> = ({
   <p
     role={role}
     aria-atomic={ariaAtomic}
-    className={`font-light tabular-nums min-w-0 overflow-hidden ${className}`}
+    className={cn("font-light tabular-nums min-w-0 overflow-hidden", className)}
   >
     <span className="sr-only">{prefix}</span>
     {value}

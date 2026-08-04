@@ -1,5 +1,5 @@
-import { DEFAULT_STEP_VALUE, MAX_STEP, STEP_MIN } from "../constants";
-import { clamp } from "./math";
+import { DEFAULT_STEP_VALUE, MAX_STEP, STEP_MIN } from "@/constants";
+import { clamp } from "@/utils/math";
 
 /** Rounds `value` and clamps it to the valid step range [STEP_MIN, MAX_STEP]. */
 export const clampStep = (value: number): number => {

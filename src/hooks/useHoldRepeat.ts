@@ -4,7 +4,7 @@ import {
   PRIMARY_POINTER_BUTTON,
   REPEAT_DELAY_MS,
   REPEAT_INTERVAL_MS,
-} from "../constants";
+} from "@/constants";
 
 export interface HoldRepeatHandlers {
   onClick: () => void;

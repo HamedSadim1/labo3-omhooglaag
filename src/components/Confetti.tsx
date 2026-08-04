@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { CELEBRATION_MS } from "../constants";
+import { CELEBRATION_MS } from "@/constants";
 import {
   generatePieces,
   prefersReducedMotion,
   type ConfettiPiece,
-} from "../utils";
+} from "@/utils";
 
 interface ConfettiProps {
   trigger: number;
